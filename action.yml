@@ -16,6 +16,9 @@ inputs:
   keystore-password:
     description: "The password for the playstore key used to sign the app"
     required: true
+  key-alias:
+    description: "The alias of keystore"
+    required: true   
 
 runs:
   using: "composite"
@@ -63,12 +66,13 @@ runs:
       run: |
         echo "$KEYSTORE" | base64 --decode > app/keystore.jks
         echo "storeFile=keystore.jks" >> key.properties
-        echo "keyAlias=upload" >> key.properties
+        echo "keyAlias=$KEY_ALIAS" >> key.properties
         echo "storePassword=$KEYSTORE_PASSWORD" >> key.properties
         echo "keyPassword=$KEYSTORE_PASSWORD" >> key.properties
       env:
         KEYSTORE: ${{ inputs.keystore-base64 }}
         KEYSTORE_PASSWORD: ${{ inputs.keystore-password }}
+        KEY_ALIAS: ${{ inputs.key-alias }}
       working-directory: ${{ inputs.working-directory }}/android
 
     - name: Build
