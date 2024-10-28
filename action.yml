@@ -16,7 +16,7 @@ inputs:
   keystore-password:
     description: "The password for the playstore key used to sign the app"
     required: true
-  key-alias:
+  keystore-alias:
     description: "The alias of keystore"
     required: true   
 
